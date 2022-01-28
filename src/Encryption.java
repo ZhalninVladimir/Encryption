@@ -7,22 +7,22 @@ import java.util.Scanner;
 
 public class Encryption {
     static final String alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ.,”:-—!? ";
-    static final char [] chars = alphabet.toCharArray();
+    static final char[] chars = alphabet.toCharArray();
     public static final Scanner SCANNER = new Scanner(System.in);
 
     public static void main(String[] args) {
         encrypt();
     }
 
-    public static void writeNewContentToFile(Path path,List<String> result) throws IOException {
+    public static void writeNewContentToFile(Path path, List<String> result) throws IOException {
         Path parent = path.getParent();
         System.out.println("Придумайте и введите имя файла c расширением txt, затем enter:");
         String nameOfFile = SCANNER.nextLine();
         Path name;
-        if (nameOfFile.endsWith(".txt")){
+        if (nameOfFile.endsWith(".txt")) {
             name = Path.of(nameOfFile);
-        }else {
-            name = Path.of(nameOfFile+".txt");
+        } else {
+            name = Path.of(nameOfFile + ".txt");
         }
         Path file = Files.createFile(parent.resolve(name));
         Files.write(file, result);
@@ -50,14 +50,14 @@ public class Encryption {
                 try {
                     lines = Files.readAllLines(path);
                     result = encrypt(lines, kea);
-                    writeNewContentToFile(path,result);
+                    writeNewContentToFile(path, result);
                     System.out.println("Файл создан в той же директории!");
                     System.out.println();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-            }else if (choice == 2){
+            } else if (choice == 2) {
                 System.out.println("Введите полный путь к файлу для расшифровки, затем enter:");
                 path = Path.of(SCANNER.nextLine());
                 System.out.println("Введите ключ - целое число (от 1 до 75), затем enter:");
@@ -65,37 +65,37 @@ public class Encryption {
                 try {
                     lines = Files.readAllLines(path);
                     result = decrypt(lines, kea);
-                    writeNewContentToFile(path,result);
+                    writeNewContentToFile(path, result);
                     System.out.println("Файл создан в той же директории!");
                     System.out.println();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }else if (choice == 3){
+            } else if (choice == 3) {
                 Breaking.bruteForce();
-            }else if(choice == 4){
+            } else if (choice == 4) {
                 Breaking.statisticAnalize();
-            }else if(choice == 5){
+            } else if (choice == 5) {
                 System.out.println("До новых встреч!)");
                 System.exit(0);
-            }else {
+            } else {
                 System.out.println("Invalid number! Попробуйте еще раз!");
                 System.out.println();
             }
         }
     }
 
-    public static List<String> encrypt(List<String> lines, int kea){
+    public static List<String> encrypt(List<String> lines, int kea) {
         List<String> enryptLines = new ArrayList<>();
         for (String line : lines) {
-            char [] strChars = line.toCharArray();
-            char [] result = new char[strChars.length];
+            char[] strChars = line.toCharArray();
+            char[] result = new char[strChars.length];
             for (int i = 0; i < strChars.length; i++) {
                 char strChar = strChars[i];
                 for (int j = 0; j < chars.length; j++) {
                     char ch = chars[j];
-                    if (strChar == ch){
-                        result[i] = chars[(j+kea)%chars.length];
+                    if (strChar == ch) {
+                        result[i] = chars[(j + kea) % chars.length];
                     }
                 }
             }
@@ -104,9 +104,10 @@ public class Encryption {
 
         return enryptLines;
     }
-    public static List<String> decrypt(List<String> lines,int key) {
+
+    public static List<String> decrypt(List<String> lines, int key) {
         List<String> decryptLines = new ArrayList<>();
-        int kea = chars.length-key;
+        int kea = chars.length - key;
         for (String line : lines) {
             char[] strChars = line.toCharArray();
             char[] result = new char[strChars.length];

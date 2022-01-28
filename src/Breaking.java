@@ -17,7 +17,7 @@ public class Breaking {
                 int count = 0;
                 result = Encryption.decrypt(lines, i);
                 for (String line : result) {
-                    if (line.contains(", ") && line.contains(". ") ) {
+                    if (line.contains(", ") && line.contains(". ")) {
                         count++;
                     }
                 }
