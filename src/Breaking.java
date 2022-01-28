@@ -90,6 +90,7 @@ public class Breaking {
             Encryption.writeNewContentToFile(pathOfEnrypted, newLines);
             System.out.println("Файл создан в той же директории, что и зашифрованный файл");
             System.out.println();
+            System.out.println();
 
         } catch (IOException e) {
             e.printStackTrace();
